@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube Thumbnail Downloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🎬 YouTube Thumbnail Downloader</h1>
+
+    <!-- Input -->
+    <form id="linkForm">
+      <input type="url"
+             id="ytUrl"
+             placeholder="Paste a YouTube link here"
+             required />
+      <button type="submit">Get Thumbnail</button>
+    </form>
+
+    <!-- Error -->
+    <p id="error" class="hidden"></p>
+
+    <!-- Results -->
+    <div id="thumbHolder" class="hidden">
+      <h2>Available Resolutions</h2>
+      <div id="thumbGrid"></div>
+    </div>
+  </div>
+  
+  <footer>
+    <small>
+      This tool fetches publicly available thumbnail URLs provided by YouTube.  
+      Thumbnails remain property of their respective owners.  
+    </small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
