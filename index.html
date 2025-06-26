@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube Thumbnail Downloader</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: #1e293b;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #3b82f6;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      color: white;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+    .thumbnails {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .thumbnail {
+      background: #334155;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      text-align: center;
+    }
+    .thumbnail img {
+      max-width: 100%;
+      border-radius: 0.5rem;
+    }
+    .thumbnail a {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h1>YouTube Thumbnail Downloader</h1>
+  <div class="container">
+    <input type="text" id="youtubeUrl" placeholder="Paste YouTube video link here..." />
+    <button onclick="getThumbnail()">Get Thumbnails</button>
+    <div id="result" class="thumbnails"></div>
+  </div>
+  <script>
+    function getVideoId(url) {
+      const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[1].length === 11) ? match[1] : null;
+    }
+
+    function getThumbnail() {
+      const url = document.getElementById('youtubeUrl').value.trim();
+      const videoId = getVideoId(url);
+      const result = document.getElementById('result');
+      result.innerHTML = '';
+
+      if (!videoId) {
+        result.innerHTML = '<p style="color:red">Invalid YouTube URL</p>';
+        return;
+      }
+
+      const resolutions = ['maxresdefault', 'hqdefault', 'mqdefault'];
+      resolutions.forEach(res => {
+        const thumbUrl = `https://img.youtube.com/vi/${videoId}/${res}.jpg`;
+        result.innerHTML += `
+          <div class="thumbnail">
+            <img src="${thumbUrl}" alt="${res} thumbnail">
+            <a href="${thumbUrl}" download>Download ${res}</a>
+          </div>`;
+      });
+    }
+  </script>
+</body>
+</html>
